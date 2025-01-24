@@ -42,17 +42,19 @@ def h2o_fit(rho, T):
     lib.h2ofit_(
         ctypes.byref(rho_c),
         ctypes.byref(T_c),
-        ctypes.byref(pnk_t),
-        ctypes.byref(fnk_t),
-        ctypes.byref(unk_t),
+        ctypes.byref(pnk_t), 
+        ctypes.byref(fnk_t), # dimensionless
+        ctypes.byref(unk_t), # dimensionless
         ctypes.byref(cv),
         ctypes.byref(chit),
         ctypes.byref(chir),
         ctypes.byref(pmbar),
-        ctypes.byref(uspec),
+        ctypes.byref(uspec), # in erg/g
     )
 
-    specific_entropy = ((unk_t.value - fnk_t.value) / T) * (uspec.value / unk_t.value) * 1e-10
+    u = uspec.value * 1e-4
+
+    specific_entropy = ((unk_t.value - fnk_t.value) / T) * (u / unk_t.value)
 
     # Return results as a dictionary
     # return {
@@ -70,8 +72,8 @@ def h2o_fit(rho, T):
 
 # Example usage
 if __name__ == "__main__":
-    rho = 1.0  # g/cc
-    t = 300.0  # K
+    rho = 2.0  # g/cc
+    t = 2000.0  # K
     results = h2o_fit(rho, t)
     print(results)
 
