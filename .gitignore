@@ -1,6 +1,5 @@
 *.o
 *.mod
 Fortran/sample_implementation
-*.py
 *.dat
 Fortran/test
