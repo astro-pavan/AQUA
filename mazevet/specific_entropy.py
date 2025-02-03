@@ -2,6 +2,7 @@ import numpy as np
 import fmodpy
 import ctypes
 from scipy.interpolate import interp1d, RegularGridInterpolator
+import matplotlib.pyplot as plt
 
 #mazevet21 = fmodpy.fimport('mazevet/eoswater21.f')
 
@@ -111,6 +112,22 @@ def is_in_mazevet(P, T):
 
 # Example usage
 if __name__ == "__main__":
+
+    P_test = np.logspace(8, 13)
+    T_test = np.logspace(np.log10(300), np.log10(30000), num=60)
+
+    s_test = np.zeros(shape=(50, 60))
+
+    for i, P, in enumerate(P_test):
+        for j, T in enumerate(T_test):
+
+            s_test[i, j] = h2o_fit(P, T)
+
+    plt.contourf(T_test, P_test, np.log10(-s_test))
+    plt.colorbar()
+    plt.xscale('log')
+    plt.yscale('log')
+    plt.savefig('s.png')
     
     filename = './SESAME_table/AQUA_H20.txt'
 
