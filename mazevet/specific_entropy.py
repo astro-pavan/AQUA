@@ -23,7 +23,7 @@ lib.h2ofit_.argtypes = [
 ]
 
 # Python wrapper function
-def h2o_fit(rho, T):
+def specific_entropy(rho, T):
     # Inputs
     rho_c = ctypes.c_double(rho)
     T_c = ctypes.c_double(T)
